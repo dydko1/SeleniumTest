@@ -1,28 +1,36 @@
-package StepDefinition;		
+package StepDefinition;
 
-import cucumber.api.java.en.Given;		
-import cucumber.api.java.en.Then;		
-import cucumber.api.java.en.When;		
+import java.util.concurrent.TimeUnit;
 
-public class Steps {				
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-     
-    @Given("^Open the Firefox and launch the application$")				
-    public void open_the_Firefox_and_launch_the_application() throws Throwable							
-    {		
-        System.out.println("This Step open the Firefox and launch the application.");					
-    }		
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
-    @When("^Enter the Username and Password$")					
-    public void enter_the_Username_and_Password() throws Throwable 							
-    {		
-       System.out.println("This step enter the Username and Password on the login page.");					
-    }		
+public class Steps {
+	WebDriver driver;
 
-    @Then("^Reset the credential$")					
-    public void Reset_the_credential() throws Throwable 							
-    {    		
-        System.out.println("This step click on the Reset button.");					
-    }		
+	@Given("^Open the Firefox and launch the application$")
+	public void open_the_Firefox_and_launch_the_application() throws Throwable {
+		System.setProperty("webdriver.chrome.driver", "chromedriver81.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.get("http://demo.guru99.com/v4");
+	}
+
+	@When("^Enter the Username and Password$")
+	public void enter_the_Username_and_Password() throws Throwable {
+		driver.findElement(By.name("uid")).sendKeys("mngr258522");
+		driver.findElement(By.name("password")).sendKeys("hetEmAr");
+	}
+
+	@Then("^Reset the credential$")
+	public void Reset_the_credential() throws Throwable {
+		driver.findElement(By.name("btnLogin")).click();
+	}
 
 }
